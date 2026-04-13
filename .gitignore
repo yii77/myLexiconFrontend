@@ -1,0 +1,9 @@
+*
+
+!.gitignore
+
+!src/
+!src/**
+
+!package.json
+!package-lock.json
