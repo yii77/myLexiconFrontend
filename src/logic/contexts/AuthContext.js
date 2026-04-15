@@ -3,13 +3,12 @@ import {
   useState,
   useEffect,
   useMemo,
-  useRef,
   useCallback,
 } from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { getAccessToken } from '../../data/api/getAccessToken';
+import { fetchAccessToken } from '../../data/api/fetchAccessToken';
 
 import { API_ENDPOINTS } from '../../config/api';
 
@@ -51,7 +50,7 @@ export const AuthProvider = ({ children }) => {
           refreshToken = newRefreshToken;
         }
 
-        const newAccessToken = await getAccessToken(refreshToken);
+        const newAccessToken = await fetchAccessToken(refreshToken);
         setAccessToken(newAccessToken);
 
         const storedUser = await AsyncStorage.getItem('user');
@@ -75,7 +74,7 @@ export const AuthProvider = ({ children }) => {
 
     setUser(userData);
 
-    const newAccessToken = await getAccessToken(refreshToken);
+    const newAccessToken = await fetchAccessToken(refreshToken);
     setAccessToken(newAccessToken);
   }, []);
 
@@ -93,7 +92,7 @@ export const AuthProvider = ({ children }) => {
 
       if (!refreshToken) return null;
 
-      const newAccessToken = await getAccessToken(refreshToken);
+      const newAccessToken = await fetchAccessToken(refreshToken);
 
       setAccessToken(newAccessToken);
     } catch (err) {

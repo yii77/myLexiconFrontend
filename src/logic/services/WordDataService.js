@@ -17,7 +17,7 @@ import {
   fetchDistractor,
   fetchWordVersion,
   fetchWord,
-} from '../../data/api/getWordData';
+} from '../../data/api/fetchWordData';
 
 export async function syncDistractor(authFetch) {
   const localVersion = await getLocalDistractorVersion();

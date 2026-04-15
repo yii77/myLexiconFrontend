@@ -1,6 +1,6 @@
 import { API_ENDPOINTS } from '../../config/api';
 
-export const getAccessToken = async refreshToken => {
+export const fetchAccessToken = async refreshToken => {
   try {
     const res = await fetch(API_ENDPOINTS.getAccessToken, {
       method: 'POST',

@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { AuthProvider, AuthContext } from './logic/contexts/AuthContext';
 import { FontProvider } from './logic/contexts/FontContext';
 
-import { bootstrapApp } from './logic/services/appBootstrapService';
+import { initApp } from './logic/services/AppInitService';
 
 import RootNavigator from './presentation/navigations/RootNavigator';
 
@@ -38,7 +38,7 @@ function AppInner() {
   useEffect(() => {
     async function init() {
       try {
-        await bootstrapApp(authFetch);
+        await initApp(authFetch);
         console.log('✅ 初始化完成');
         setReady(true);
       } catch (err) {
