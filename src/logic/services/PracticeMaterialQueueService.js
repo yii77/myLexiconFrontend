@@ -69,7 +69,7 @@ export async function generatePracticeMaterialQueue(
     daily_total_limit,
     study_order,
     review_order,
-    learning_mode,
+    practice_mode,
   } = config;
 
   // 扣减今日已完成数量
@@ -86,7 +86,7 @@ export async function generatePracticeMaterialQueue(
 
   const remainingCapacity = Math.max(daily_total_limit - reviewWords.length, 0);
   const newLimit =
-    learning_mode === 'review_only'
+    practice_mode === 'review_only'
       ? 0
       : Math.min(effectiveNewLimit, remainingCapacity);
 
@@ -96,12 +96,12 @@ export async function generatePracticeMaterialQueue(
   const practiceMaterialQueue = buildQueue(
     reviewWords,
     newWords,
-    learning_mode,
+    practice_mode,
   );
 
   return {
     practiceMaterialQueue,
     todayReviewWordCount: reviewWords.length,
-    todayNewWordCount: learning_mode === 'review_only' ? 0 : newWords.length,
+    todayNewWordCount: practice_mode === 'review_only' ? 0 : newWords.length,
   };
 }
