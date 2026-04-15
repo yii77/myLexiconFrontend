@@ -4,6 +4,7 @@ import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { AuthProvider, AuthContext } from './logic/contexts/AuthContext';
+import { FontProvider } from './logic/contexts/FontContext';
 
 import { bootstrapApp } from './logic/services/appBootstrapService';
 
@@ -14,16 +15,18 @@ import { CustomAlertProvider } from './presentation/components/system/Alert/Cust
 export default function App() {
   return (
     <CustomAlertProvider>
-      <AuthProvider>
+      <FontProvider>
         <NavigationContainer>
-          <StatusBar
-            backgroundColor="transparent"
-            translucent
-            barStyle="dark-content"
-          />
-          <AppInner />
+          <AuthProvider>
+            <StatusBar
+              backgroundColor="transparent"
+              translucent
+              barStyle="dark-content"
+            />
+            <AppInner />
+          </AuthProvider>
         </NavigationContainer>
-      </AuthProvider>
+      </FontProvider>
     </CustomAlertProvider>
   );
 }
