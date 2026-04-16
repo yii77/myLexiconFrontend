@@ -43,7 +43,7 @@ export function useDownloadWordbook(navigation) {
 
         showAlert({
           title: '下载词书',
-          contents: '正在处理词书，请稍后',
+          content: '正在处理词书，请稍后',
           buttons: [
             {
               text: '取消',
@@ -73,7 +73,7 @@ export function useDownloadWordbook(navigation) {
           if (!ok) {
             showAlert({
               title: '下载失败',
-              contents: '网络错误或词书不存在，请稍后再试',
+              content: '网络错误或词书不存在，请稍后再试',
               buttons: [{ text: '确定' }],
               type: 'center',
             });
@@ -89,7 +89,7 @@ export function useDownloadWordbook(navigation) {
             console.error('存储过程出错:', err);
             showAlert({
               title: '保存失败',
-              contents: '本地数据库写入失败',
+              content: '本地数据库写入失败',
               buttons: [{ text: '确定' }],
               type: 'center',
             });
