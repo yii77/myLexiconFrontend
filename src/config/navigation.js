@@ -1,6 +1,6 @@
-import practiceIcon from '../../asset/Practice.png';
-import bookIcon from '../../asset/Book.png';
-import profileIcon from '../../asset/Profile.png';
+import practiceIcon from '../../assets/icon/Practice.png';
+import bookIcon from '../../assets/icon/Book.png';
+import profileIcon from '../../assets/icon/Profile.png';
 
 export const TABS = [
   {

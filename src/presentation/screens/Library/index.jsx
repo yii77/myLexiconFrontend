@@ -18,7 +18,7 @@ import styles from './style';
 import generalStyles from '../../styles/general.style';
 import atomStyles from '../../styles/atom.style';
 
-import backIcon from '../../../../asset/back.png';
+import backIcon from '../../../../assets/icon/back.png';
 
 export default function LibraryScreen({ navigation }) {
   const {

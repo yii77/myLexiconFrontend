@@ -12,7 +12,7 @@ import styles from './style';
 import generalStyles from '../../styles/general.style';
 import atomStyles from '../../styles/atom.style';
 
-import appLogo from '../../../../asset/app.png';
+import appLogo from '../../../../assets/logo/app.png';
 
 export default function WelcomeScreen({ navigation }) {
   const [isAgreed, setIsAgreed] = useState(false);
