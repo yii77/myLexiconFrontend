@@ -1,8 +1,10 @@
 import { useContext } from 'react';
 
-import { AuthContext } from '../../contexts/AuthContext';
-import { useCustomAlert } from '../../../presentation/components/system/Alert/useCustomAlert';
 import { loginByPhone } from '../../../data/api/loginByPhone';
+
+import { AuthContext } from '../../contexts/AuthContext';
+
+import { useCustomAlert } from '../../../presentation/components/system/Alert/useCustomAlert';
 
 export function useAuth() {
   const { login } = useContext(AuthContext);

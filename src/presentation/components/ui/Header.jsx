@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet } from 'react-native';
 
-import { ImageButton, TextButton } from '../../components/ui/Button';
+import { ImageButton, TextButton } from './Button';
 
 import generalStyles from '../../styles/general.style';
 

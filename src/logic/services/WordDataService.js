@@ -1,23 +1,22 @@
 import {
+  fetchDistractorVersion,
+  fetchDistractor,
+  fetchWordVersion,
+  fetchWord,
+} from '../../data/api/fetchWordData';
+
+import {
   getLocalWordsVersion,
   setLocalWordsVersion,
   clearWordsTable,
   insertWord,
 } from '../../data/dao/wordDao';
-
 import {
   getLocalDistractorVersion,
   setLocalDistractorVersion,
   clearDistractorTable,
   insertDistractor,
 } from '../../data/dao/distractorDao';
-
-import {
-  fetchDistractorVersion,
-  fetchDistractor,
-  fetchWordVersion,
-  fetchWord,
-} from '../../data/api/fetchWordData';
 
 export async function syncDistractor(authFetch) {
   const localVersion = await getLocalDistractorVersion();

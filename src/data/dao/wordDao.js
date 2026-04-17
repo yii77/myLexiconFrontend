@@ -1,4 +1,5 @@
 import db from '../local/connection';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // 清空 words 表
