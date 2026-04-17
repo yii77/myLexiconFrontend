@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import {
   Text,
   FlatList,
@@ -32,9 +32,9 @@ export default function LibraryScreen({ navigation }) {
     selectedSubcategory,
 
     handleSearch,
-    selectCategory,
-    selectSubcategory,
-    onDownloadAction,
+    handleSelectCategory,
+    handleSelectSubcategory,
+    handleDownloadWordBook,
   } = useLibraryController();
 
   return (
@@ -49,20 +49,20 @@ export default function LibraryScreen({ navigation }) {
       <CategoryList
         categories={categories}
         selectedCategory={selectedCategory}
-        onSelect={selectCategory}
+        handleSelect={handleSelectCategory}
       />
       <HorizontalDividingLine />
 
       <SubcategoryList
         selectedCategory={selectedCategory}
         selectedSubcategory={selectedSubcategory}
-        selectSubcategory={selectSubcategory}
+        handleSelectSubcategory={handleSelectSubcategory}
       />
 
       <WordbookList
         libraryLoading={libraryLoading}
         error={error}
-        onDownload={onDownloadAction}
+        handleDownloadWordBook={handleDownloadWordBook}
         wordbooks={filteredWordbooks}
         practiceWordbookId={practiceWordbookId}
       />
@@ -70,7 +70,7 @@ export default function LibraryScreen({ navigation }) {
   );
 }
 
-const Search = React.memo(function Search({ onSearch }) {
+const Search = memo(({ onSearch }) => {
   return (
     <TextInput
       placeholder="输入词书名称搜索"
@@ -80,16 +80,20 @@ const Search = React.memo(function Search({ onSearch }) {
   );
 });
 
-function CategoryList({ categories, selectedCategory, onSelect }) {
+const CategoryList = ({ categories, selectedCategory, handleSelect }) => {
   const renderItem = useCallback(
     ({ item }) => {
       const isSelected = selectedCategory?.name === item.name;
 
       return (
-        <CategoryItem item={item} isSelected={isSelected} onSelect={onSelect} />
+        <CategoryItem
+          item={item}
+          isSelected={isSelected}
+          onPress={handleSelect}
+        />
       );
     },
-    [selectedCategory?.name, onSelect],
+    [selectedCategory?.name, handleSelect],
   );
   return (
     <View>
@@ -104,16 +108,12 @@ function CategoryList({ categories, selectedCategory, onSelect }) {
       />
     </View>
   );
-}
+};
 
-const CategoryItem = React.memo(function CategoryItem({
-  item,
-  isSelected,
-  onSelect,
-}) {
+const CategoryItem = memo(({ item, isSelected, onPress }) => {
   const handlePress = useCallback(() => {
-    onSelect(item);
-  }, [onSelect, item]);
+    onPress(item);
+  }, [onPress, item]);
 
   return (
     <View>
@@ -131,41 +131,35 @@ const CategoryItem = React.memo(function CategoryItem({
   );
 });
 
-const SubcategoryList = React.memo(function SubcategoryList({
-  selectedCategory,
-  selectedSubcategory,
-  selectSubcategory,
-}) {
-  if (!selectedCategory) return null;
+const SubcategoryList = memo(
+  ({ selectedCategory, selectedSubcategory, handleSelectSubcategory }) => {
+    if (!selectedCategory) return null;
 
-  const subcategories = selectedCategory.subcategories || [];
+    const subcategories = selectedCategory.subcategories || [];
 
-  const handleItemPress = useCallback(
-    item => {
-      selectSubcategory(item);
-    },
-    [selectSubcategory],
-  );
+    const handleItemPress = useCallback(
+      item => {
+        handleSelectSubcategory(item);
+      },
+      [handleSelectSubcategory],
+    );
 
-  return (
-    <View style={[generalStyles.rowWrapContainer, atomStyles.gap10]}>
-      {subcategories.map(item => (
-        <SubcategoryItem
-          key={item}
-          item={item}
-          isSelected={selectedSubcategory === item}
-          onPress={handleItemPress}
-        />
-      ))}
-    </View>
-  );
-});
+    return (
+      <View style={[generalStyles.rowWrapContainer, atomStyles.gap10]}>
+        {subcategories.map(item => (
+          <SubcategoryItem
+            key={item}
+            item={item}
+            isSelected={selectedSubcategory === item}
+            onPress={handleItemPress}
+          />
+        ))}
+      </View>
+    );
+  },
+);
 
-const SubcategoryItem = React.memo(function SubcategoryItem({
-  item,
-  isSelected,
-  onPress,
-}) {
+const SubcategoryItem = memo(({ item, isSelected, onPress }) => {
   return (
     <TextButton
       title={item}
@@ -182,13 +176,13 @@ const SubcategoryItem = React.memo(function SubcategoryItem({
   );
 });
 
-function WordbookList({
+const WordbookList = ({
   libraryLoading,
   error,
   wordbooks,
   practiceWordbookId,
-  onDownload,
-}) {
+  handleDownloadWordBook,
+}) => {
   const renderItem = useCallback(
     ({ item }) => {
       const isLearning = item._id === practiceWordbookId;
@@ -197,11 +191,11 @@ function WordbookList({
         <WordbookItem
           item={item}
           isLearning={isLearning}
-          onDownload={onDownload}
+          onPress={handleDownloadWordBook}
         />
       );
     },
-    [practiceWordbookId, onDownload],
+    [practiceWordbookId, handleDownloadWordBook],
   );
 
   if (libraryLoading) return <Text>正在加载</Text>;
@@ -224,16 +218,12 @@ function WordbookList({
       removeClippedSubviews={true}
     />
   );
-}
+};
 
-const WordbookItem = React.memo(function WordbookItem({
-  item,
-  isLearning,
-  onDownload,
-}) {
+const WordbookItem = memo(({ item, isLearning, onPress }) => {
   const handlePress = useCallback(() => {
-    onDownload(item);
-  }, [onDownload, item]);
+    onPress(item);
+  }, [onPress, item]);
 
   return (
     <TouchableOpacity

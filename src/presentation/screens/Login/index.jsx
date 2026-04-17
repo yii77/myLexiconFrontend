@@ -3,8 +3,6 @@ import { View, TextInput, Text } from 'react-native';
 
 import { useAuth } from '../../../logic/hooks/auth/useAuth';
 
-import { useCustomAlert } from '../../components/system/Alert/useCustomAlert';
-
 import { CommonHeader } from '../../components/ui/Header';
 import { Page } from '../../components/ui/Page';
 import { TextButton } from '../../components/ui/Button';
@@ -20,29 +18,6 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState('');
 
   const { handleLogin } = useAuth();
-  const { showAlert } = useCustomAlert();
-
-  const onLoginPress = () => {
-    if (!phone) {
-      showAlert({
-        title: '提示',
-        content: '请输入电话',
-        buttons: [{ text: '确定' }],
-        type: 'center',
-      });
-      return;
-    }
-    if (!password) {
-      showAlert({
-        title: '提示',
-        content: '请输入密码',
-        buttons: [{ text: '确定' }],
-        type: 'center',
-      });
-      return;
-    }
-    handleLogin({ phone, password });
-  };
 
   return (
     <Page pageStyle={[atomStyles.paddingHorizontal16, atomStyles.gap16]}>
@@ -73,7 +48,7 @@ export default function LoginScreen({ navigation }) {
         <Text style={styles.forgetPasswordText}>忘记密码</Text>
         <TextButton
           title={'登录'}
-          onPress={onLoginPress}
+          onPress={handleLogin}
           buttonStyle={styles.loginButton}
           textStyle={styles.loginText}
         />

@@ -6,45 +6,7 @@ import { getBooksByCategory } from '../../../data/dao/bookDao';
 
 import { AuthContext } from '../../contexts/AuthContext';
 
-function generateCategories(library) {
-  const map = {};
-  const mySubcategories = new Set();
-
-  library.forEach(wb => {
-    if (wb.source_type === 'user') {
-      if (wb.subcategory) {
-        mySubcategories.add(wb.subcategory);
-      }
-    } else {
-      const cat = wb.category;
-      const subcat = wb.subcategory;
-
-      if (!map[cat]) {
-        map[cat] = new Set();
-      }
-
-      if (subcat) {
-        map[cat].add(subcat);
-      }
-    }
-  });
-
-  const categories = [];
-
-  categories.push({
-    name: '我的',
-    subcategories: ['全部', ...Array.from(mySubcategories)],
-  });
-
-  Object.entries(map).forEach(([name, subSet]) => {
-    categories.push({
-      name,
-      subcategories: ['全部', ...Array.from(subSet)],
-    });
-  });
-
-  return categories;
-}
+import { extractCategory } from '../../utils/extractCategory';
 
 export function useFetchLibrary() {
   const [library, setLibrary] = useState([]);
@@ -54,7 +16,7 @@ export function useFetchLibrary() {
   const { authFetch } = useContext(AuthContext);
 
   useEffect(() => {
-    async function loadWordbooks() {
+    const loadWordbooks = async () => {
       let isMounted = true;
       try {
         const [remoteRes, localBooks] = await Promise.all([
@@ -80,13 +42,13 @@ export function useFetchLibrary() {
       } finally {
         if (isMounted) setLibraryLoading(false);
       }
-    }
+    };
 
     loadWordbooks();
   }, [authFetch]);
 
   const categories = useMemo(() => {
-    return generateCategories(library);
+    return extractCategory(library);
   }, [library]);
 
   return {

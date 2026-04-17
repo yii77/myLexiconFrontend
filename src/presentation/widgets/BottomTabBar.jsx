@@ -1,10 +1,10 @@
-import React from 'react';
+import { memo } from 'react';
 import { View, TouchableOpacity, Image, Text, StyleSheet } from 'react-native';
 
 import { TABS } from '../../config/navigation';
 import Theme from '../../config/theme/index';
 
-const BottomTabBar = ({ activeTab, onTabPress }) => {
+export const BottomTabBar = memo(({ activeTab, onTabPress }) => {
   return (
     <View style={styles.container}>
       {TABS.map(tab => {
@@ -29,7 +29,7 @@ const BottomTabBar = ({ activeTab, onTabPress }) => {
       })}
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -58,5 +58,3 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 });
-
-export default React.memo(BottomTabBar);

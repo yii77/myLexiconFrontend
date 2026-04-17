@@ -26,7 +26,7 @@ const initialState = {
   todayFinishedReviewWordCount: 0,
 };
 
-function reducer(state, action) {
+const reducer = (state, action) => {
   switch (action.type) {
     case 'INIT': {
       return {
@@ -86,7 +86,7 @@ function reducer(state, action) {
     default:
       return state;
   }
-}
+};
 
 export function PracticeMaterialQueueProvider({ children }) {
   const { config } = useContext(PracticeConfigContext);

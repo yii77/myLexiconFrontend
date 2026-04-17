@@ -19,12 +19,12 @@ export function useLibraryController() {
     selectedCategory,
     selectedSubcategory,
     filteredWordbooks,
-    selectCategory,
-    selectSubcategory,
+    handleSelectCategory,
+    handleSelectSubcategory,
   } = useFilterWordbook(library, categories);
 
   // ===== 下载逻辑 =====
-  const { onDownloadAction } = useDownloadWordbook(navigation);
+  const { handleDownloadWordBook } = useDownloadWordbook(navigation);
 
   const handleSearch = useCallback(() => {
     navigation.navigate('SearchWordbookScreen');
@@ -44,8 +44,8 @@ export function useLibraryController() {
 
     // 行为
     handleSearch,
-    selectCategory,
-    selectSubcategory,
-    onDownloadAction,
+    handleSelectCategory,
+    handleSelectSubcategory,
+    handleDownloadWordBook,
   };
 }

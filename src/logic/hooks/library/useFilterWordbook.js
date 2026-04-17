@@ -39,12 +39,12 @@ export function useFilterWordbook(wordbooks, categories) {
     return map;
   }, [wordbooks]);
 
-  const selectCategory = useCallback(category => {
+  const handleSelectCategory = useCallback(category => {
     setSelectedCategory(category);
     setSelectedSubcategory(category.subcategories[0] || null);
   }, []);
 
-  const selectSubcategory = useCallback(subcategory => {
+  const handleSelectSubcategory = useCallback(subcategory => {
     setSelectedSubcategory(subcategory);
   }, []);
 
@@ -70,7 +70,7 @@ export function useFilterWordbook(wordbooks, categories) {
     selectedSubcategory,
     filteredWordbooks,
 
-    selectCategory,
-    selectSubcategory,
+    handleSelectCategory,
+    handleSelectSubcategory,
   };
 }

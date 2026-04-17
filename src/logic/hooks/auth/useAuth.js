@@ -10,6 +10,24 @@ export function useAuth() {
   const { login } = useContext(AuthContext);
   const { showAlert } = useCustomAlert();
   const handleLogin = async ({ phone, password }) => {
+    if (!phone) {
+      showAlert({
+        title: '提示',
+        content: '请输入电话',
+        buttons: [{ text: '确定' }],
+        type: 'center',
+      });
+      return;
+    }
+    if (!password) {
+      showAlert({
+        title: '提示',
+        content: '请输入密码',
+        buttons: [{ text: '确定' }],
+        type: 'center',
+      });
+      return;
+    }
     try {
       const { ok, result } = await loginByPhone(phone, password);
 

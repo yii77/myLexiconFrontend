@@ -19,7 +19,7 @@ export default function WelcomeScreen({ navigation }) {
 
   const { showAlert } = useCustomAlert();
 
-  const handleLogin = () => {
+  const navigateToLogin = () => {
     if (!isAgreed) {
       showAlert({
         title: (
@@ -56,13 +56,13 @@ export default function WelcomeScreen({ navigation }) {
   return (
     <Page pageStyle={[styles.container]}>
       <AppBrandHeader />
-      <ButtonRows onLogin={handleLogin} onRegister={handleLogin} />
-      <Agreement onAgree={setIsAgreed} isAgreed={isAgreed} />
+      <ButtonRows onLogin={navigateToLogin} onRegister={navigateToLogin} />
+      <Agreement handleAgree={setIsAgreed} isAgreed={isAgreed} />
     </Page>
   );
 }
 
-function AppBrandHeader() {
+const AppBrandHeader = () => {
   return (
     <View style={styles.appBrandHeaderContainer}>
       <Image source={appLogo} style={styles.appLogo} />
@@ -70,9 +70,9 @@ function AppBrandHeader() {
       <Text style={styles.welcomeText}>你的词书，一切由你定义</Text>
     </View>
   );
-}
+};
 
-function ButtonRows({ onLogin, onRegister }) {
+const ButtonRows = ({ onLogin, onRegister }) => {
   return (
     <View style={styles.buttonRowsContainer}>
       <TextButton
@@ -89,14 +89,14 @@ function ButtonRows({ onLogin, onRegister }) {
       />
     </View>
   );
-}
+};
 
-function Agreement({ onAgree, isAgreed }) {
+const Agreement = ({ handleAgree, isAgreed }) => {
   return (
     <View style={styles.agreementContainer}>
       <CheckBox
         value={isAgreed}
-        onValueChange={newValue => onAgree(newValue)}
+        onValueChange={newValue => handleAgree(newValue)}
         style={styles.checkBox}
         tintColors={styles.checkBoxTintColors}
       />
@@ -119,4 +119,4 @@ function Agreement({ onAgree, isAgreed }) {
       </Text>
     </View>
   );
-}
+};

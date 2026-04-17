@@ -31,12 +31,12 @@ export default function App() {
   );
 }
 
-function AppInner() {
+const AppInner = () => {
   const { authFetch } = useContext(AuthContext);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    async function init() {
+    const init = async () => {
       try {
         await initApp(authFetch);
         console.log('✅ 初始化完成');
@@ -44,7 +44,7 @@ function AppInner() {
       } catch (err) {
         console.log('初始化失败', err);
       }
-    }
+    };
 
     init();
   }, []);
@@ -54,4 +54,4 @@ function AppInner() {
   }
 
   return <RootNavigator />;
-}
+};

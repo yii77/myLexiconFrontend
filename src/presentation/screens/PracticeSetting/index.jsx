@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useRef } from 'react';
+import { memo, useCallback, useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 
 import {
@@ -53,7 +53,7 @@ export default function PracticeSettingScreen({ navigation }) {
     }
   }, [brushModes, getBrushAlertContent, showAlert]);
 
-  const openOptions = useCallback(
+  const openOptionAlert = useCallback(
     type => {
       const { options, onSelect } = getSheetOptions(type);
       showAlert({
@@ -73,7 +73,7 @@ export default function PracticeSettingScreen({ navigation }) {
     [getSheetOptions, showAlert, hideAlert],
   );
 
-  const openBrushMode = useCallback(() => {
+  const openBrushModeAlert = useCallback(() => {
     isBrushModeOpen.current = true;
     showAlert({
       content: getBrushAlertContent(),
@@ -102,7 +102,7 @@ export default function PracticeSettingScreen({ navigation }) {
           { label: '每日总数上限', key: 'dailyTotalLimit' },
         ]}
         values={settings}
-        onPress={openOptions}
+        onPress={openOptionAlert}
       />
 
       <DividingLine />
@@ -129,14 +129,14 @@ export default function PracticeSettingScreen({ navigation }) {
           },
         ]}
         values={settings}
-        onPress={openOptions}
+        onPress={openOptionAlert}
       />
 
       <DividingLine />
 
       <SettingItem
         label="刷词模式"
-        onPress={openBrushMode}
+        onPress={openBrushModeAlert}
         right={
           <Image
             source={rightIcon}

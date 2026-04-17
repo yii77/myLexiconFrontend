@@ -33,7 +33,7 @@ export function useDownloadWordbook(navigation) {
     };
   }, []);
 
-  const onDownloadAction = useCallback(
+  const handleDownloadWordBook = useCallback(
     async book => {
       if (downloading) return;
 
@@ -139,6 +139,6 @@ export function useDownloadWordbook(navigation) {
   );
 
   return {
-    onDownloadAction,
+    handleDownloadWordBook,
   };
 }

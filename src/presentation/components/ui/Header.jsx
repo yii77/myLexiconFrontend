@@ -91,7 +91,6 @@ export function CommonHeader({
   // 渲染右侧按钮：优先图片，否则文字
   const renderRight = () => {
     if (rightImageSource) {
-      console.log(rightImageSource);
       return (
         <ImageButton
           imageSource={rightImageSource}
