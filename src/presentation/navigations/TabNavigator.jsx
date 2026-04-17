@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { PracticeWordbookProvider } from '../../logic/contexts/PracticeWordbookContext';
 import { PracticeConfigProvider } from '../../logic/contexts/PracticeConfigContext';
 import { PracticeMaterialQueueProvider } from '../../logic/contexts/PracticeMaterialQueueContext';
+import { UserBookProvider } from '../../logic/contexts/UserBookContext';
 
 import PracticeStack from './stacks/PracticeStack';
 import BookStack from './stacks/BookStack';
@@ -15,33 +16,35 @@ export default function TabNavigator() {
     <PracticeWordbookProvider>
       <PracticeConfigProvider>
         <PracticeMaterialQueueProvider>
-          <Stack.Navigator
-            screenOptions={{
-              headerShown: false,
-            }}
-          >
-            <Stack.Screen
-              name="PracticeStack"
-              component={PracticeStack}
-              options={{
-                animation: 'slide_from_left',
+          <UserBookProvider>
+            <Stack.Navigator
+              screenOptions={{
+                headerShown: false,
               }}
-            />
-            <Stack.Screen
-              name="BookStack"
-              component={BookStack}
-              options={{
-                animation: 'fade',
-              }}
-            />
-            <Stack.Screen
-              name="ProFileStack"
-              component={ProFileStack}
-              options={{
-                animation: 'fade',
-              }}
-            />
-          </Stack.Navigator>
+            >
+              <Stack.Screen
+                name="PracticeStack"
+                component={PracticeStack}
+                options={{
+                  animation: 'slide_from_left',
+                }}
+              />
+              <Stack.Screen
+                name="BookStack"
+                component={BookStack}
+                options={{
+                  animation: 'fade',
+                }}
+              />
+              <Stack.Screen
+                name="ProFileStack"
+                component={ProFileStack}
+                options={{
+                  animation: 'fade',
+                }}
+              />
+            </Stack.Navigator>
+          </UserBookProvider>
         </PracticeMaterialQueueProvider>
       </PracticeConfigProvider>
     </PracticeWordbookProvider>
