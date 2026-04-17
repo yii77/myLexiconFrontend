@@ -12,7 +12,6 @@ import { useLibraryController } from './useLibraryController';
 import { Page } from '../../components/ui/Page';
 import { CommonHeader } from '../../components/ui/Header';
 import { TextButton } from '../../components/ui/Button';
-import { HorizontalDividingLine } from '../../components/ui/DividingLine';
 
 import styles from './style';
 import generalStyles from '../../styles/general.style';
@@ -51,7 +50,7 @@ export default function LibraryScreen({ navigation }) {
         selectedCategory={selectedCategory}
         handleSelect={handleSelectCategory}
       />
-      <HorizontalDividingLine />
+      <View style={generalStyles.horizontalDividingLine}></View>
 
       <SubcategoryList
         selectedCategory={selectedCategory}
@@ -170,7 +169,7 @@ const SubcategoryItem = memo(({ item, isSelected, onPress }) => {
       ]}
       textStyle={[
         generalStyles.textSmallPrompt,
-        isSelected ? atomStyles.whight : null,
+        isSelected ? atomStyles.white : null,
       ]}
     />
   );
