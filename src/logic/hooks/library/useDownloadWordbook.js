@@ -12,6 +12,8 @@ import { syncWordStatus } from '../../../data/repository/syncWordStatus';
 import { AuthContext } from '../../contexts/AuthContext';
 import { PracticeWordbookContext } from '../../contexts/PracticeWordbookContext';
 
+import { useDisplayBook } from '../book/useDisplayBook';
+
 import { useCustomAlert } from '../../../presentation/components/system/Alert/useCustomAlert';
 
 export function useDownloadWordbook(navigation) {
@@ -19,6 +21,7 @@ export function useDownloadWordbook(navigation) {
   const { savePracticeWordbook, practiceWordbook } = useContext(
     PracticeWordbookContext,
   );
+  const { updateDisplayBook } = useDisplayBook();
   const [downloading, setDownloading] = useState(false);
 
   const canceledRef = useRef(false);
@@ -74,7 +77,7 @@ export function useDownloadWordbook(navigation) {
             showAlert({
               title: '下载失败',
               content: '网络错误或词书不存在，请稍后再试',
-              buttons: [{ text: '确定' }],
+              buttons: [{ text: '确定', onPress: hideAlert }],
               type: 'center',
             });
             return;
@@ -90,7 +93,7 @@ export function useDownloadWordbook(navigation) {
             showAlert({
               title: '保存失败',
               content: '本地数据库写入失败',
-              buttons: [{ text: '确定' }],
+              buttons: [{ text: '确定', onPress: hideAlert }],
               type: 'center',
             });
             return;
@@ -99,22 +102,21 @@ export function useDownloadWordbook(navigation) {
 
         if (canceledRef.current) return;
 
-        // 更新 AsyncStorage 的当前显示词书
-        const displayWordbookStr = await AsyncStorage.getItem(
-          'displayWordbook',
-        );
-        const displayWordbook = displayWordbookStr
-          ? JSON.parse(displayWordbookStr)
-          : null;
+        // 如果当前显示词书是练习词书，一同更新
+        const displayBookStr = await AsyncStorage.getItem('displayBook');
+        const displayBook = displayBookStr ? JSON.parse(displayBookStr) : null;
 
-        if (displayWordbook?._id === practiceWordbook?._id) {
-          await AsyncStorage.setItem('displayWordbook', JSON.stringify(book));
+        if (
+          displayBook?._id === practiceWordbook?._id ||
+          displayBook === null
+        ) {
+          await updateDisplayBook(book);
         }
 
         savePracticeWordbook(book);
         hideAlert();
 
-        navigation.navigate('HomeStackNavigator', {
+        navigation.navigate('PracticeStack', {
           screen: 'HomeScreen',
           params: { book },
         });
