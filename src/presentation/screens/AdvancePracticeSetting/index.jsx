@@ -40,7 +40,7 @@ export default function AdvancedSettingScreen({ navigation }) {
           />
         ),
         buttons: [
-          { text: '取消' },
+          { text: '取消', onPress: hideAlert },
           {
             text: '确定',
             onPress: () => {
@@ -50,7 +50,7 @@ export default function AdvancedSettingScreen({ navigation }) {
                   showAlert({
                     title: '提示',
                     content: result.msg,
-                    buttons: [{ text: '好的' }],
+                    buttons: [{ text: '好的', onPress: hideAlert }],
                   });
                 }, 500);
               }

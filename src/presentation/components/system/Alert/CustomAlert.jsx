@@ -62,7 +62,7 @@ export default function CustomAlert({
                   title={btn.text}
                   onPress={btn.onPress}
                   buttonStyle={[styles.alertButton, btn.alertButtonStyle]}
-                  textStyle={[styles.alertButtonText, btn.alertButtonText]}
+                  textStyle={[styles.alertButtonText, btn.alertButtonTextStyle]}
                 />
               ))}
             </View>

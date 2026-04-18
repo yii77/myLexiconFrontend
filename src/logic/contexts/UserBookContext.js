@@ -33,7 +33,7 @@ export const UserBookProvider = ({ children }) => {
   const [optionalSubcategories, setOptionalSubcategories] = useState([]);
   const { practiceWordbook } = useContext(PracticeWordbookContext);
   const { user } = useContext(AuthContext);
-  const { showAlert } = useCustomAlert();
+  const { showAlert, hideAlert } = useCustomAlert();
 
   const updateLocalBookState = useCallback((type, payload) => {
     const { category, book, bookId } = payload;
@@ -105,7 +105,7 @@ export const UserBookProvider = ({ children }) => {
         showAlert({
           title: `添加${category}失败`,
           content: '已有该词书',
-          buttons: [{ text: '确定' }],
+          buttons: [{ text: '确定', onPress: hideAlert }],
         });
         return;
       }
@@ -144,7 +144,7 @@ export const UserBookProvider = ({ children }) => {
           showAlert({
             title: `编辑${category}失败`,
             content: '已有该词书',
-            buttons: [{ text: '确定' }],
+            buttons: [{ text: '确定', onPress: hideAlert }],
           });
           return;
         }

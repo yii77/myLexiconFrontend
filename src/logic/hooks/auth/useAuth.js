@@ -8,13 +8,13 @@ import { useCustomAlert } from '../../../presentation/components/system/Alert/us
 
 export function useAuth() {
   const { login } = useContext(AuthContext);
-  const { showAlert } = useCustomAlert();
+  const { showAlert, hideAlert } = useCustomAlert();
   const handleLogin = async ({ phone, password }) => {
     if (!phone) {
       showAlert({
         title: '提示',
         content: '请输入电话',
-        buttons: [{ text: '确定' }],
+        buttons: [{ text: '确定', onPress: hideAlert }],
         type: 'center',
       });
       return;
@@ -23,7 +23,7 @@ export function useAuth() {
       showAlert({
         title: '提示',
         content: '请输入密码',
-        buttons: [{ text: '确定' }],
+        buttons: [{ text: '确定', onPress: hideAlert }],
         type: 'center',
       });
       return;
@@ -40,7 +40,7 @@ export function useAuth() {
         showAlert({
           title: '登录失败',
           content: result.message,
-          buttons: [{ text: '确定' }],
+          buttons: [{ text: '确定', onPress: hideAlert }],
           type: 'center',
         });
       }
@@ -49,7 +49,7 @@ export function useAuth() {
       showAlert({
         title: '错误',
         content: '网络错误，请稍后再试',
-        buttons: [{ text: '确定' }],
+        buttons: [{ text: '确定', onPress: hideAlert }],
         type: 'center',
       });
     }

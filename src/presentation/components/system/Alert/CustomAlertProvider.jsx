@@ -18,10 +18,6 @@ export function CustomAlertProvider({ children }) {
     const finalButtons = config.buttons?.length
       ? config.buttons.map(btn => ({
           ...btn,
-          onPress: () => {
-            btn.onPress?.();
-            hideAlert();
-          },
         }))
       : [];
 

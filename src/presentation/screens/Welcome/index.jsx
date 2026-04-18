@@ -17,7 +17,7 @@ import appLogo from '../../../../assets/logo/app.png';
 export default function WelcomeScreen({ navigation }) {
   const [isAgreed, setIsAgreed] = useState(false);
 
-  const { showAlert } = useCustomAlert();
+  const { showAlert, hiderAlert } = useCustomAlert();
 
   const navigateToLogin = () => {
     if (!isAgreed) {
@@ -37,12 +37,13 @@ export default function WelcomeScreen({ navigation }) {
         buttons: [
           {
             text: '不同意',
-            alertButtonText: styles.modalFirstButtonText,
+            onPress: hiderAlert,
+            alertButtonTextStyle: styles.modalFirstButtonText,
           },
           {
             text: '同意',
             onPress: () => navigation.navigate('LoginScreen'),
-            alertButtonText: styles.modalSecondButtonText,
+            alertButtonTextStyle: styles.modalSecondButtonText,
           },
         ],
         type: 'center',
