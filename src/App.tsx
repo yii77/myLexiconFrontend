@@ -11,23 +11,26 @@ import { initApp } from './logic/services/AppInitService';
 import RootNavigator from './presentation/navigations/RootNavigator';
 
 import { CustomAlertProvider } from './presentation/components/system/Alert/CustomAlertProvider';
+import { ToastProvider } from './presentation/components/system/Toast/ToastProvider';
 
 export default function App() {
   return (
-    <CustomAlertProvider>
-      <FontProvider>
-        <NavigationContainer>
-          <AuthProvider>
-            <StatusBar
-              backgroundColor="transparent"
-              translucent
-              barStyle="dark-content"
-            />
-            <AppInner />
-          </AuthProvider>
-        </NavigationContainer>
-      </FontProvider>
-    </CustomAlertProvider>
+    <ToastProvider>
+      <CustomAlertProvider>
+        <FontProvider>
+          <NavigationContainer>
+            <AuthProvider>
+              <StatusBar
+                backgroundColor="transparent"
+                translucent
+                barStyle="dark-content"
+              />
+              <AppInner />
+            </AuthProvider>
+          </NavigationContainer>
+        </FontProvider>
+      </CustomAlertProvider>
+    </ToastProvider>
   );
 }
 
