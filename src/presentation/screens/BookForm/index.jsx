@@ -28,7 +28,7 @@ export default function BookForm({ navigation }) {
   const {
     subcategory,
     bookName,
-    optionalSubcategories,
+    subcategoryOptions,
     isEdit,
     category,
     editingBook,
@@ -54,7 +54,7 @@ export default function BookForm({ navigation }) {
       <View style={styles.contentContainer}>
         <View style={styles.card}>
           <SubcategorySelector
-            items={optionalSubcategories}
+            items={subcategoryOptions}
             selectedValue={subcategory}
             onSelect={setSubcategory}
           />
@@ -62,7 +62,7 @@ export default function BookForm({ navigation }) {
             value={subcategory}
             onChange={setSubcategory}
             placeholder={
-              optionalSubcategories.length === 0
+              subcategoryOptions.length === 0
                 ? '请创建分类'
                 : '请选择或创建分类'
             }

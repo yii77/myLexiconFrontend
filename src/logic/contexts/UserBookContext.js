@@ -30,7 +30,7 @@ export const UserBookProvider = ({ children }) => {
     wordBooks: [],
     noteBooks: [],
   });
-  const [optionalSubcategories, setOptionalSubcategories] = useState([]);
+
   const { practiceWordbook } = useContext(PracticeWordbookContext);
   const { user } = useContext(AuthContext);
   const { showAlert, hideAlert } = useCustomAlert();
@@ -87,15 +87,6 @@ export const UserBookProvider = ({ children }) => {
       { category: '笔记本', books: localBooks.noteBooks },
     ];
   }, [practiceWordbook, localBooks]);
-
-  const loadSubcategories = useCallback(async category => {
-    try {
-      const subs = await getSubcategoriesByCategory(category);
-      setOptionalSubcategories(subs || []);
-    } catch (err) {
-      setOptionalSubcategories([]);
-    }
-  }, []);
 
   const addUserBook = useCallback(
     async ({ name, category, subcategory }) => {
@@ -186,22 +177,19 @@ export const UserBookProvider = ({ children }) => {
   const value = useMemo(
     () => ({
       userBooks: displayGroups,
-      optionalSubcategories,
       reloadUserBooks: loadUserBooks,
-      loadSubcategories,
-      setOptionalSubcategories,
       addUserBook,
       updateUserBook,
       deleteUserBook,
+      updateLocalBookState,
     }),
     [
       displayGroups,
-      optionalSubcategories,
       loadUserBooks,
-      loadSubcategories,
       addUserBook,
       updateUserBook,
       deleteUserBook,
+      updateLocalBookState,
     ],
   );
 

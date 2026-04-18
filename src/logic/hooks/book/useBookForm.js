@@ -1,6 +1,9 @@
 import { useState, useEffect, useCallback, useMemo, useContext } from 'react';
+
 import { UserBookContext } from '../../../logic/contexts/UserBookContext';
-import { getSubcategoriesByCategory } from '../../../data/dao/bookDao';
+
+import { getSubcategoryOptions } from '../../services/BookService';
+
 import { useCustomAlert } from '../../../presentation/components/system/Alert/useCustomAlert';
 
 export function useBookForm(navigation, route) {
@@ -15,22 +18,23 @@ export function useBookForm(navigation, route) {
     editingBook?.subcategory || '',
   );
   const [bookName, setBookName] = useState(editingBook?.name || '');
-  const [optionalSubcategories, setOptionalSubcategories] = useState([]);
+  const [subcategoryOptions, setSubcategoryOptions] = useState([]);
 
   useEffect(() => {
     const targetCategory = isEdit ? editingBook.category : category;
     if (!targetCategory) return;
 
     let isMounted = true;
+
     const loadData = async () => {
-      try {
-        const subs = await getSubcategoriesByCategory(targetCategory);
-        if (isMounted) setOptionalSubcategories(subs || []);
-      } catch (err) {
-        console.error('Failed to load subcategories:', err);
+      const subs = await getSubcategoryOptions(targetCategory);
+      if (isMounted) {
+        setSubcategoryOptions(subs);
       }
     };
+
     loadData();
+
     return () => {
       isMounted = false;
     };
@@ -119,7 +123,7 @@ export function useBookForm(navigation, route) {
     state: {
       subcategory,
       bookName,
-      optionalSubcategories,
+      subcategoryOptions,
       isEdit,
       category,
       editingBook,
