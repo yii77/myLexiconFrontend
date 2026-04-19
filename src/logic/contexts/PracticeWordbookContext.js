@@ -44,6 +44,26 @@ export function PracticeWordbookProvider({ children }) {
     }
   }, []);
 
+  const refreshWordbookStats = useCallback(async () => {
+    if (!practiceWordbook) return;
+
+    try {
+      const stats = await getWordbookStats(practiceWordbook._id);
+
+      if (stats) {
+        setPracticeWordbook(prev => ({
+          ...prev,
+          word_count: stats.word_count,
+          learning: stats.learning_count,
+          mastered: stats.mastered_count,
+          new: stats.new_count,
+        }));
+      }
+    } catch (e) {
+      console.log('刷新单词统计失败', e);
+    }
+  }, [practiceWordbook]);
+
   const savePracticeWordbook = useCallback(async book => {
     try {
       await AsyncStorage.setItem('practiceWordbook', JSON.stringify(book));
@@ -62,6 +82,7 @@ export function PracticeWordbookProvider({ children }) {
       practiceWordbook,
       reloadPracticeWordbook: loadPracticeWordbook,
       savePracticeWordbook,
+      refreshWordbookStats,
     }),
     [practiceWordbook],
   );
