@@ -18,10 +18,10 @@ import {
   insertDistractor,
 } from '../../data/dao/distractorDao';
 
-export async function syncDistractor(authFetch) {
+export async function syncDistractor() {
   const localVersion = await getLocalDistractorVersion();
 
-  const serverRes = await fetchDistractorVersion(authFetch);
+  const serverRes = await fetchDistractorVersion();
   if (!serverRes.ok) return { ok: false, updated: false };
 
   const serverVersion = String(serverRes.version);
@@ -31,7 +31,7 @@ export async function syncDistractor(authFetch) {
     return { ok: true, updated: false };
   }
 
-  const dataRes = await fetchDistractor(authFetch);
+  const dataRes = await fetchDistractor();
   if (!dataRes.ok) return { ok: false, updated: false };
 
   await clearDistractorTable();
@@ -41,10 +41,10 @@ export async function syncDistractor(authFetch) {
   return { ok: true, updated: true };
 }
 
-export async function syncWord(authFetch) {
+export async function syncWord() {
   const localVersion = await getLocalWordsVersion();
 
-  const serverRes = await fetchWordVersion(authFetch);
+  const serverRes = await fetchWordVersion();
   if (!serverRes.ok) return { ok: false, updated: false };
 
   const serverVersion = String(serverRes.version);
@@ -54,7 +54,7 @@ export async function syncWord(authFetch) {
     return { ok: true, updated: false };
   }
 
-  const dataRes = await fetchWord(authFetch);
+  const dataRes = await fetchWord();
   if (!dataRes.ok) return { ok: false, updated: false };
 
   await clearWordsTable();
@@ -64,6 +64,6 @@ export async function syncWord(authFetch) {
   return { ok: true, updated: true };
 }
 
-export async function syncAll(authFetch) {
-  await Promise.all([syncDistractor(authFetch), syncWord(authFetch)]);
+export async function syncAll() {
+  await Promise.all([syncDistractor(), syncWord()]);
 }

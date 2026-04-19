@@ -5,10 +5,10 @@ import { API_ENDPOINTS } from '../../config/api';
 // =======================
 
 // 获取服务器 version
-export async function fetchDistractorVersion(authFetch) {
+export async function fetchDistractorVersion() {
   try {
     const url = `${API_ENDPOINTS.getDistractor}?mode=version`;
-    const res = await authFetch(url);
+    const res = await fetch(url);
     const json = await res.json();
 
     return {
@@ -22,10 +22,10 @@ export async function fetchDistractorVersion(authFetch) {
 }
 
 // 获取 distractor 列表数据
-export async function fetchDistractor(authFetch) {
+export async function fetchDistractor() {
   try {
     const url = `${API_ENDPOINTS.getDistractor}?mode=distractor`;
-    const res = await authFetch(url);
+    const res = await fetch(url);
     const json = await res.json();
 
     return {
@@ -33,7 +33,7 @@ export async function fetchDistractor(authFetch) {
       list: json.data ?? [],
     };
   } catch (err) {
-    console.log('fetchDistractors error:', err);
+    console.log('fetchDistractor error:', err);
     return { ok: false, list: [] };
   }
 }
@@ -43,10 +43,10 @@ export async function fetchDistractor(authFetch) {
 // =======================
 
 // 获取 words 版本号
-export async function fetchWordVersion(authFetch) {
+export async function fetchWordVersion() {
   try {
     const url = `${API_ENDPOINTS.getWord}?mode=version`;
-    const res = await authFetch(url);
+    const res = await fetch(url);
     const json = await res.json();
 
     return {
@@ -54,16 +54,16 @@ export async function fetchWordVersion(authFetch) {
       version: json.version ?? null,
     };
   } catch (err) {
-    console.log('fetchWordsVersion error:', err);
+    console.log('fetchWordVersion error:', err);
     return { ok: false, version: null };
   }
 }
 
 // 获取 words 列表
-export async function fetchWord(authFetch) {
+export async function fetchWord() {
   try {
     const url = `${API_ENDPOINTS.getWord}?mode=words`;
-    const res = await authFetch(url);
+    const res = await fetch(url);
     const json = await res.json();
 
     return {
@@ -71,7 +71,7 @@ export async function fetchWord(authFetch) {
       list: json.data ?? [],
     };
   } catch (err) {
-    console.log('fetchWords error:', err);
+    console.log('fetchWord error:', err);
     return { ok: false, list: [] };
   }
 }

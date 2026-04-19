@@ -38,7 +38,7 @@ export default StyleSheet.create({
   welcomeText: {
     fontSize: 20,
     fontWeight: 400,
-    color: Theme.colors.textGrayLevel3,
+    color: Theme.colors.textGrayLevel2,
   },
   baseButton: {
     alignItems: 'center',
@@ -47,12 +47,12 @@ export default StyleSheet.create({
     padding: 10,
   },
   loginButton: {
-    backgroundColor: Theme.colors.primary,
+    backgroundColor: Theme.colors.blockLightBlue,
   },
   registerButton: {
     backgroundColor: Theme.colors.background,
     borderWidth: 1,
-    borderColor: Theme.colors.primary,
+    borderColor: Theme.colors.blockLightBlue,
   },
   baseButtonText: {
     fontSize: 16,
@@ -62,13 +62,13 @@ export default StyleSheet.create({
     color: Theme.colors.background,
   },
   registerButtonText: {
-    color: Theme.colors.primary,
+    color: Theme.colors.lineLightBlue,
   },
   checkBox: {
     transform: [{ scale: 0.8 }],
   },
   checkBoxTintColors: {
-    true: Theme.colors.primary,
-    false: Theme.colors.primary,
+    true: Theme.colors.blockLightBlue,
+    false: Theme.colors.blockLightBlue,
   },
 });

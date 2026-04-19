@@ -22,7 +22,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 10,
-    backgroundColor: Theme.colors.primary,
+    backgroundColor: Theme.colors.blockLightBlue,
   },
 
   loginText: {

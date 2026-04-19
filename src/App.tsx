@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 
-import { AuthProvider, AuthContext } from './logic/contexts/AuthContext';
+import { AuthProvider } from './logic/contexts/AuthContext';
 import { FontProvider } from './logic/contexts/FontContext';
 
 import { initApp } from './logic/services/AppInitService';
@@ -14,6 +14,22 @@ import { CustomAlertProvider } from './presentation/components/system/Alert/Cust
 import { ToastProvider } from './presentation/components/system/Toast/ToastProvider';
 
 export default function App() {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const init = async () => {
+      try {
+        await initApp();
+        console.log('✅ 初始化完成');
+        setReady(true);
+      } catch (err) {
+        console.log('初始化失败', err);
+      }
+    };
+
+    init();
+  }, []);
+
   return (
     <ToastProvider>
       <CustomAlertProvider>
@@ -25,7 +41,7 @@ export default function App() {
                 translucent
                 barStyle="dark-content"
               />
-              <AppInner />
+              <RootNavigator />
             </AuthProvider>
           </NavigationContainer>
         </FontProvider>
@@ -33,28 +49,3 @@ export default function App() {
     </ToastProvider>
   );
 }
-
-const AppInner = () => {
-  const { authFetch } = useContext(AuthContext);
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    const init = async () => {
-      try {
-        await initApp(authFetch);
-        console.log('✅ 初始化完成');
-        setReady(true);
-      } catch (err) {
-        console.log('初始化失败', err);
-      }
-    };
-
-    init();
-  }, []);
-
-  if (!ready) {
-    return null; // TODO：改成加载页面
-  }
-
-  return <RootNavigator />;
-};

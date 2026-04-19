@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { View, TextInput, Text } from 'react-native';
 
 import { useAuth } from '../../../logic/hooks/auth/useAuth';
@@ -14,10 +13,7 @@ import atomStyles from '../../styles/atom.style';
 import backIcon from '../../../../assets/icon/back.png';
 
 export default function LoginScreen({ navigation }) {
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-
-  const { handleLogin } = useAuth();
+  const { phone, password, setPhone, setPassword, handleLogin } = useAuth();
 
   return (
     <Page pageStyle={[atomStyles.paddingHorizontal16, atomStyles.gap16]}>
