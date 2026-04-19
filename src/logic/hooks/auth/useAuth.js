@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useState, useContext } from 'react';
 
 import { loginByPhone } from '../../../data/api/loginByPhone';
 
@@ -7,9 +7,11 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { useCustomAlert } from '../../../presentation/components/system/Alert/useCustomAlert';
 
 export function useAuth() {
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
   const { login } = useContext(AuthContext);
   const { showAlert, hideAlert } = useCustomAlert();
-  const handleLogin = async ({ phone, password }) => {
+  const handleLogin = async () => {
     if (!phone) {
       showAlert({
         title: '提示',
@@ -55,5 +57,5 @@ export function useAuth() {
     }
   };
 
-  return { handleLogin };
+  return { phone, password, setPhone, setPassword, handleLogin };
 }
