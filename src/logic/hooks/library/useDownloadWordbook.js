@@ -6,8 +6,7 @@ import { downloadWordbook } from '../../../data/api/downloadWordbook';
 
 import { createBook, getWordbookById } from '../../../data/dao/bookDao';
 import { insertWords } from '../../../data/dao/wordBookMappingDao';
-
-import { syncWordStatus } from '../../../data/repository/syncWordStatus';
+import { batchInsertWordsIfNotExists } from '../../../data/dao/wordLearningDao';
 
 import { AuthContext } from '../../contexts/AuthContext';
 import { PracticeWordbookContext } from '../../contexts/PracticeWordbookContext';
@@ -85,7 +84,7 @@ export function useDownloadWordbook(navigation) {
 
           // 数据库存储
           try {
-            await syncWordStatus(result); // 同步进度
+            await batchInsertWordsIfNotExists(result); // 同步进度
             await insertWords(result); // 插入单词
             await createBook(book); // 创建书本索引
           } catch (err) {
