@@ -657,6 +657,32 @@ export function updateUnitTitle(bookId, previousTitle, newTitle) {
 // 删除操作
 // ==============================================
 
+export function deleteNoteById(id) {
+  return new Promise((resolve, reject) => {
+    if (!id) {
+      resolve(false);
+      return;
+    }
+
+    db.transaction(tx => {
+      tx.executeSql(
+        `
+        DELETE FROM word_book_mapping
+        WHERE _id = ?
+        `,
+        [id],
+        (_, result) => {
+          resolve((result.rowsAffected || 0) > 0);
+        },
+        (_, error) => {
+          reject(error);
+          return true;
+        },
+      );
+    });
+  });
+}
+
 export function deleteWordsByIds(ids) {
   if (!ids || ids.length === 0) {
     return Promise.resolve();

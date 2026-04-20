@@ -5,8 +5,11 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import { useGetWordData } from '../../../logic/hooks/word/useGetWordData';
 import { useWordSwitch } from '../../../logic/hooks/word/useSwitchWord';
+import { useNoteActions } from '../../../logic/hooks/word/useNoteActions';
 
 import { WordDataSection } from '../../widgets/WordDataSection';
+
+import { useCustomAlert } from '../../components/system/Alert/useCustomAlert';
 
 import { Page } from '../../components/ui/Page';
 import { ImageButton } from '../../components/ui/Button';
@@ -36,6 +39,33 @@ export default function WordDetailScreen({ route, navigation }) {
     }, [refreshNotes]),
   );
 
+  const { showAlert, hideAlert } = useCustomAlert();
+
+  const { deleteNote } = useNoteActions();
+
+  console.log(wordData);
+  const handleDeleteNote = _id => {
+    showAlert({
+      title: '提示',
+      content: '确认删除笔记吗？',
+      buttons: [
+        { text: '取消', onPress: hideAlert },
+        {
+          text: '确定',
+          onPress: () => {
+            const success = deleteNote(_id);
+            if (success) {
+              refreshNotes();
+              hideAlert();
+            } else {
+              // hideAlert();
+            }
+          },
+        },
+      ],
+    });
+  };
+
   return (
     <Page pageStyle={[atomStyles.paddingHorizontal16, atomStyles.gap16]}>
       <View style={[generalStyles.rowContainer, atomStyles.paddingBottom10]}>
@@ -49,7 +79,10 @@ export default function WordDetailScreen({ route, navigation }) {
         </CustomText>
       </View>
 
-      <WordDataSection wordData={wordData} />
+      <WordDataSection
+        wordData={wordData}
+        handleDeleteNote={handleDeleteNote}
+      />
 
       <ImageButton
         imageSource={addIcon}

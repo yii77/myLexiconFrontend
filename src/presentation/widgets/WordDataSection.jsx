@@ -23,7 +23,7 @@ import Theme from '../../config/theme/index';
 import upIcon from '../../../assets/icon/up.png';
 import downIcon from '../../../assets/icon/down.png';
 
-export function WordDataSection({ wordData }) {
+export function WordDataSection({ wordData, handleDeleteNote }) {
   return (
     <ScrollView
       style={atomStyles.flex}
@@ -35,6 +35,7 @@ export function WordDataSection({ wordData }) {
           key={item._id}
           item={item}
           isLast={index === wordData.length - 1}
+          handleDeleteNote={handleDeleteNote}
         />
       ))}
     </ScrollView>
@@ -42,7 +43,7 @@ export function WordDataSection({ wordData }) {
 }
 
 const DataItem = memo(
-  ({ item, isLast }) => {
+  ({ item, isLast, handleDeleteNote }) => {
     const {
       _id,
       word,
@@ -84,6 +85,13 @@ const DataItem = memo(
           <TouchableOpacity
             onPress={toggleExpand}
             style={generalStyles.rowBetweenContainer}
+            onLongPress={
+              isNote
+                ? () => {
+                    handleDeleteNote(_id);
+                  }
+                : undefined
+            }
           >
             <View style={[atomStyles.gap10, generalStyles.rowContainer]}>
               <Text style={styles.sectionTitle}>{book_name}</Text>
