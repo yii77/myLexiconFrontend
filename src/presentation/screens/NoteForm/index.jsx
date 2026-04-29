@@ -1,4 +1,4 @@
-import { memo, useState, useMemo, useCallback } from 'react';
+import { memo, useState, useMemo, useCallback, useEffect } from 'react';
 import {
   View,
   Text,
@@ -14,8 +14,9 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import { NOTE_DISPLAY_TYPES } from '../../../data/constants/noteDisplayType';
 
-import { mapFont } from '../../../logic/utils/mapFont';
-import { mapWeight } from '../../../logic/utils/mapWeight';
+import { getFont, getFontOptions } from '../../../logic/utils/font';
+import { getWeight, getWeightOptions } from '../../../logic/utils/fontWeight';
+import { getConnectorOptions } from '../../../logic/utils/connector';
 
 import { FullColorPicker } from '../../widgets/FullColorPicker';
 
@@ -54,7 +55,6 @@ export default function NoteFormSreen({ route, navigation }) {
     rowHeights,
     colDragging,
     firstRowDefaults,
-    fontOptions,
     note_display_type,
     firstRowOptions,
     noteStyles,
@@ -169,7 +169,6 @@ export default function NoteFormSreen({ route, navigation }) {
           />
           <StyleSettingsCard
             noteStyles={noteStyles}
-            fontOptions={fontOptions}
             firstRowOptions={firstRowOptions}
             activeStyleCardIndex={activeStyleCardIndex}
             setActiveStyleCardIndex={setActiveStyleCardIndex}
@@ -619,7 +618,6 @@ const NoteDisplayModeSelector = memo(
 const StyleSettingsCard = memo(
   ({
     noteStyles,
-    fontOptions,
     firstRowOptions,
     activeStyleCardIndex,
     setActiveStyleCardIndex,
@@ -663,7 +661,6 @@ const StyleSettingsCard = memo(
         {/* 具体样式配置表单 */}
         <RowStyleCard
           data={activeData}
-          fontOptions={fontOptions}
           onChange={(field, value) => updateCardData(activeLabel, field, value)}
         />
       </View>
@@ -671,20 +668,19 @@ const StyleSettingsCard = memo(
   },
 );
 
-const RowStyleCard = memo(({ data, onChange, fontOptions }) => {
-  const sizeOptions = ['12', '14', '16', '18', '20', '22'];
-  const next_col_options = ['空格', '逗号', '点号', '短横线', '下划线', '无'];
-  const weightOptions = [
-    'UltraLight',
-    'Thin',
-    'Light',
-    'Regular',
-    'Medium',
-    'Semibold',
-    'Bold',
-    'Heavy',
-    'Black',
-  ];
+const RowStyleCard = memo(({ data, onChange }) => {
+  const sizeOptions = ['12', '13', '14', '15', '16', '17', '18', '19', '20'];
+  const next_col_options = getConnectorOptions();
+  const weightOptions = getWeightOptions(data.font_family);
+  const [fontOptions, setFontOptions] = useState([]);
+
+  useEffect(() => {
+    const init = async () => {
+      const options = await getFontOptions();
+      setFontOptions(options);
+    };
+    init();
+  }, []);
 
   // 左侧竖线组件
   const GroupWrapper = ({ children }) => (
@@ -765,8 +761,8 @@ const RowStyleCard = memo(({ data, onChange, fontOptions }) => {
             labelStyle={generalStyles.textOptionsGray}
             triggerArrowStyle={generalStyles.triggerArrowStyle}
             menuStyle={[styles.fontDropdownMenu, generalStyles.menuShadow]}
-            itemTextStyle={opt => ({
-              fontFamily: mapFont(opt),
+            itemTextStyle={fontName => ({
+              fontFamily: `${getFont(fontName)}-${400}`,
             })}
           />,
         )}
@@ -782,6 +778,7 @@ const RowStyleCard = memo(({ data, onChange, fontOptions }) => {
             labelStyle={generalStyles.textOptionsGray}
             triggerArrowStyle={generalStyles.triggerArrowStyle}
             itemTextStyle={opt => ({
+              fontFamily: `${getFont(data.font_family)}-${400}`,
               fontSize: Number(opt),
             })}
           />,
@@ -801,7 +798,7 @@ const RowStyleCard = memo(({ data, onChange, fontOptions }) => {
             labelStyle={generalStyles.textOptionsGray}
             triggerArrowStyle={generalStyles.triggerArrowStyle}
             itemTextStyle={opt => ({
-              fontWeight: mapWeight(opt),
+              fontFamily: `${getFont(data.font_family)}-${getWeight(opt)}`,
             })}
           />,
         )}

@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from 'react';
 
 import { getUserSetting } from '../../data/dao/userSettingsDao';
 
-import { mapFont } from '../utils/mapFont';
+import { getFont } from '../utils/font';
 
 export const FontContext = createContext(null);
 
@@ -14,8 +14,8 @@ export function FontProvider({ children }) {
     const cn = await getUserSetting('chinese_font');
 
     setFonts({
-      english: { fontFamily: mapFont(en?.fontFamily) },
-      chinese: { fontFamily: mapFont(cn?.fontFamily) },
+      english: getFont(en),
+      chinese: getFont(cn),
     });
   };
 

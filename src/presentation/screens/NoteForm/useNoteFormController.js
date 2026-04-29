@@ -7,8 +7,6 @@ import { useNoteBooks } from '../../../logic/hooks/word/useNoteBooks';
 import { useNoteTable } from '../../../logic/hooks/word/useNoteTable';
 import { useNoteStyle } from '../../../logic/hooks/word/useNoteStyle';
 
-import { getFontOptions } from '../../../logic/services/FontService';
-
 import { cleanEmptyRowsAndColumns } from '../../../logic/utils/cleanEmptyRowsAndColumns';
 
 import { NoteCard } from '../../widgets/NoteCard';
@@ -59,15 +57,6 @@ export function useNoteFormController() {
   } = useNoteStyle({ editingNote, cellTexts, cols });
 
   const { addNote, updateNote } = useNoteActions();
-
-  const [fontOptions, setFontOptions] = useState([]);
-  useEffect(() => {
-    const init = async () => {
-      const options = await getFontOptions();
-      setFontOptions(options);
-    };
-    init();
-  }, []);
 
   const { showAlert, hideAlert } = useCustomAlert();
   const { showToast } = useToast();
@@ -206,7 +195,6 @@ export function useNoteFormController() {
     rowHeights,
     colDragging,
     firstRowDefaults,
-    fontOptions,
     note_display_type,
     firstRowOptions,
     noteStyles,

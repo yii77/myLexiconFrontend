@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
-import { mapFont } from '../../logic/utils/mapFont';
-import { mapWeight } from '../../logic/utils/mapWeight';
-import { mapConnector } from '../../logic/utils/mapConnector';
+import { getFont } from '../../logic/utils/font';
+import { getWeight } from '../../logic/utils/fontWeight';
+import { getConnector } from '../../logic/utils/connector';
 
 import generalStyles from '../styles/general.style';
 import atomStyles from '../styles/atom.style';
@@ -23,10 +23,10 @@ export function NoteCard({ note_display_type, cellTexts, noteStyles }) {
   for (const [key, item] of Object.entries(noteStyles)) {
     stylesMap[key] = {
       color: item.font_color,
-      fontWeight: mapWeight(item.font_weight),
-      fontFamily: mapFont(item.font_family),
+      fontFamily: `${getFont(item.font_family)}-${getWeight(item.font_weight)}${
+        item.italic ? 'Italic' : ''
+      }`,
       fontSize: Number(item.font_size),
-      fontStyle: item.italic ? 'italic' : 'normal',
       backgroundColor: item.background_color,
     };
     toggleMap[key] = item.toggle_visible;
@@ -68,7 +68,7 @@ export function NoteCard({ note_display_type, cellTexts, noteStyles }) {
                 const header = headers[colIndex];
                 const connector =
                   colIndex < lastIndex
-                    ? mapConnector(connectorMap[header])
+                    ? getConnector(connectorMap[header])
                     : '';
                 if (!text || !visibleMap[header]) return null;
                 return (
@@ -109,7 +109,7 @@ export function NoteCard({ note_display_type, cellTexts, noteStyles }) {
               {rows.map((row, rowIdx) => {
                 const text = row[colIndex] || '';
                 const connector =
-                  rowIdx < lastIndex ? mapConnector(connectorMap[header]) : '';
+                  rowIdx < lastIndex ? getConnector(connectorMap[header]) : '';
                 if (!text) return null;
                 return (
                   <Text key={rowIdx}>
