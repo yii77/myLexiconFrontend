@@ -23,8 +23,16 @@ export function insertWord(list) {
       tx => {
         list.forEach(item => {
           tx.executeSql(
-            `INSERT OR REPLACE INTO words (_id, word, definition) VALUES (?, ?, ?);`,
-            [item._id, item.word, JSON.stringify(item.definition || [])],
+            `INSERT OR REPLACE INTO words 
+              (_id, word, definition, us_phonetic, uk_phonetic) 
+              VALUES (?, ?, ?, ?, ?);`,
+            [
+              item._id,
+              item.word,
+              JSON.stringify(item.definition || []),
+              item.us_phonetic || '',
+              item.uk_phonetic || '',
+            ],
             null,
             (_, err) => reject(err),
           );

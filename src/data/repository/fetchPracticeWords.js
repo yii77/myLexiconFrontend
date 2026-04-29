@@ -15,7 +15,7 @@ export function queryReviewWords(limit, reviewOrder) {
 
     db.transaction(tx => {
       tx.executeSql(
-        `SELECT w.word, w.review_count, w.difficulty
+        `SELECT w.word, w.review_count, w.difficulty_rate,w.difficulty_star
          FROM word_learning w
          WHERE w.next_review_time <= ?
          ${orderSQL}
@@ -40,7 +40,7 @@ export function queryNewWords(wordbookId, limit, studyOrder) {
 
     db.transaction(tx => {
       tx.executeSql(
-        `SELECT m.word, w.review_count, w.difficulty
+        `SELECT m.word, w.review_count, w.difficulty_rate,w.difficulty_star
          FROM word_book_mapping m
          LEFT JOIN word_learning w ON m.word = w.word
          WHERE m.book_id = ?

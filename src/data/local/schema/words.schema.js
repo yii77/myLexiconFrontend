@@ -3,7 +3,9 @@ export const createWordsTable = tx => {
     CREATE TABLE IF NOT EXISTS words (
       _id TEXT PRIMARY KEY,
       word TEXT,
-      definition TEXT
+      definition TEXT,
+      us_phonetic TEXT,
+      uk_phonetic TEXT
     );
   `);
 };

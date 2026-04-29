@@ -11,6 +11,7 @@ import { createDistractorsTable } from './schema/distractors.schema';
 // index
 import { createWordIndex } from './index/word.index';
 import { createLearningIndex } from './index/learning.index';
+import { createDistractorIndex } from './index/distractor.index';
 
 export function initDB() {
   return new Promise((resolve, reject) => {
@@ -27,6 +28,7 @@ export function initDB() {
         // ===== indexes =====
         createWordIndex(tx);
         createLearningIndex(tx);
+        createDistractorIndex(tx);
       },
       error => {
         reject(error);

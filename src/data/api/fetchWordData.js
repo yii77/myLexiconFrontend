@@ -24,13 +24,29 @@ export async function fetchDistractorVersion() {
 // 获取 distractor 列表数据
 export async function fetchDistractor() {
   try {
-    const url = `${API_ENDPOINTS.getDistractor}?mode=distractor`;
-    const res = await fetch(url);
-    const json = await res.json();
+    const limit = 20000;
+    let page = 1;
+    let allList = [];
+
+    while (true) {
+      const url = `${API_ENDPOINTS.getDistractor}?mode=distractor&page=${page}&limit=${limit}`;
+
+      const res = await fetch(url);
+      const json = await res.json();
+
+      const list = json.data ?? [];
+
+      allList = [...allList, ...list];
+      if (list.length < limit) {
+        break;
+      }
+
+      page++;
+    }
 
     return {
-      ok: res.ok,
-      list: json.data ?? [],
+      ok: true,
+      list: allList,
     };
   } catch (err) {
     console.log('fetchDistractor error:', err);
